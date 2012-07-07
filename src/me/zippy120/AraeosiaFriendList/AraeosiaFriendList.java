@@ -18,12 +18,14 @@ public class AraeosiaFriendList extends JavaPlugin{
 		
 		this.log("Enabling Plugin...");
 		this.dbConnect();
-		CommandExecutor Executor = new FriendCommandExecutor(this);
+		Database db = new Database(this);
+		CommandExecutor Executor = new FriendCommandExecutor(this, db);
 		getCommand("basic").setExecutor(Executor);
+		getServer().getPluginManager().registerEvents(new LoginListener(this), this);
 		this.log("Plugin enabled!");
 	}
 
-	private void log(String string) {
+	protected void log(String string) {
 		log.info("[FriendList]: " + string);
 		
 	}
@@ -46,6 +48,11 @@ public class AraeosiaFriendList extends JavaPlugin{
 
 	public void error(String string, Player player) {
 		player.sendMessage(ChatColor.RED + string);
+		
+	}
+	
+	public void Message(String string, Player player) {
+		player.sendMessage(ChatColor.GREEN + string);
 		
 	}
 }
